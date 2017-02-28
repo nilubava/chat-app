@@ -1,21 +1,21 @@
 import Message from './Message';
+import ReactDOM from 'react-dom';
 
 import React from 'react';
 import Relay from 'react-relay';
 
 class MessageList extends React.Component {
-  _scrollToNewChat() {
-    setTimeout(function() {
-      var list = document.getElementById('chatlist');
-      list.scrollTop = list.scrollHeight - list.clientHeight;
-    }, 100);
+  componentDidMount() {
+    var node = ReactDOM.findDOMNode(this);
+    node.scrollTop = node.scrollHeight - node.clientHeight;
   }
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.viewer.totalCount < this.props.viewer.totalCount) {
-      this._scrollToNewChat();
+      var node = ReactDOM.findDOMNode(this);
+      node.scrollTop = node.scrollHeight - node.clientHeight;
     }
   }
+
   renderMessages() {
     return this.props.viewer.messages.edges.map(edge =>
       <Message
@@ -28,7 +28,7 @@ class MessageList extends React.Component {
   render() {
     const numMessages = this.props.viewer.totalCount;
     return (
-      <section className="main" id='chatlist'>
+      <section className="main">
         <ul className="message-list">
           {this.renderMessages()}
         </ul>
