@@ -1,0 +1,4 @@
+.DS_Store
+data/schema.graphql
+node_modules
+public/app.css
